@@ -1,10 +1,10 @@
 package christmas.domain;
 
+import christmas.ui.utilObject.Number;
+
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Stream;
 
 public class Order {
 
@@ -12,54 +12,70 @@ public class Order {
     private static final Integer MINIMUM_ORDER_QUANTITY = 1;
     private static final Integer MAXIMUM_TOTAL_ORDER_QUANTITY = 20;
 
-    private final Map<Dish, Integer> order = new HashMap<>();
+    private final Map<Dish, Integer> order;
 
-    public void putDish(Map<Dish, Integer> inputOrders) {
-        validateMiniMumDishCount(getQuantityStream(inputOrders));
-        validateMaximumDishCount(getQuantityStream(inputOrders));
-        validateDuplicateDish(getDishStreams(inputOrders));
-        validateOnlyDrinkOrder(getDishStreams(inputOrders));
+    public Order(List<String[]> items) {
+        order = new HashMap<>();
+
+        for (String[] parts : items) {
+            Integer quantity = getQuantity(parts[1]);
+            Dish dishByName = Dish.findDishByName(parts[0]);
+
+            validateMinimumDishCount(quantity);
+            validateDuplicateDish(dishByName);
+
+            order.put(dishByName, quantity);
+        }
+
+        validateMaximumTotalDishCount();
+        validateOnlyDrinkOrder();
+
     }
 
-    private static Stream<Integer> getQuantityStream(Map<Dish, Integer> inputOrders) {
-        return inputOrders.values().stream();
+    public Integer calculateOriginalPrice() {
+        return order.entrySet().stream()
+                .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
+                .sum();
     }
 
-    private static Stream<Dish> getDishStreams(Map<Dish, Integer> inputOrders) {
-        return inputOrders.keySet().stream();
-    }
-
-    private void validateMiniMumDishCount(Stream<Integer> quantity) {
-        if (quantity.anyMatch(i -> i < MINIMUM_ORDER_QUANTITY)) {
+    private void validateDuplicateDish(Dish dishByName) {
+        if (order.containsKey(dishByName)) {
             throw new IllegalArgumentException(ORDER_ERROR_MESSAGE);
         }
     }
 
-    private void validateMaximumDishCount(Stream<Integer> quantity) {
-        if (quantity.mapToInt(Integer::intValue).sum() > MAXIMUM_TOTAL_ORDER_QUANTITY) {
+    private void validateMinimumDishCount(Integer quantity) {
+        if (quantity < MINIMUM_ORDER_QUANTITY || quantity > MAXIMUM_TOTAL_ORDER_QUANTITY) {
             throw new IllegalArgumentException(ORDER_ERROR_MESSAGE);
         }
     }
 
-    private void validateDuplicateDish(Stream<Dish> dish) {
-        Set<Dish> setDish = new HashSet<>();
+    private void validateMaximumTotalDishCount() {
+        boolean isExceedMaximumQuantity = order.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum() > MAXIMUM_TOTAL_ORDER_QUANTITY;
 
-        if (dish.toList().size() != setDish.size()) {
+        if (isExceedMaximumQuantity) {
             throw new IllegalArgumentException(ORDER_ERROR_MESSAGE);
         }
     }
 
-    private void validateOnlyDrinkOrder(Stream<Dish> dish) {
-        if (isOnlyDrinkDish(dish)) {
-            throw new IllegalArgumentException(ORDER_ERROR_MESSAGE);
-        }
-    }
-
-    private static boolean isOnlyDrinkDish(Stream<Dish> dish) {
-        return dish
+    private void validateOnlyDrinkOrder() {
+        boolean isOnlyDrinkDish = order.keySet().stream()
                 .map(Dish::getMenuType)
                 .allMatch(menuType -> menuType.equals(MenuType.DRINK));
+
+        if (isOnlyDrinkDish) {
+            throw new IllegalArgumentException(ORDER_ERROR_MESSAGE);
+        }
     }
 
+
+    //todo: 이거 InputView로 분리할 생각 해보기
+    private Integer getQuantity(String parts) {
+        Number number = new Number(parts);
+        Integer quantity = number.getNumericValue();
+        return quantity;
+    }
 
 }
