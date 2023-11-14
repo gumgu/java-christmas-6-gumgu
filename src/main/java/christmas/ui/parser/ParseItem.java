@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ParseOrder {
+public class ParseItem {
 
     private static final String DELIMITER_COMMA = ",";
     private static final String DELIMITER_HYPHEN = "-";
 
     //todo: 함수 쪼개기
-    public static List<String[]> parseOrder(String inputValue) {
-        List<String[]> eachOrders = new ArrayList<>();
+    public static List<String[]> parseItem(String inputValue) {
+        List<String[]> eachItems = new ArrayList<>();
 
         String[] items = inputValue.split(DELIMITER_COMMA);
 
@@ -25,10 +25,10 @@ public class ParseOrder {
             Dish.validateDishName(split[0]); // 요리 검증
             new Number(split[1]); // 숫자 검증
 
-            eachOrders.add(split);
+            eachItems.add(split);
         }
 
-        return eachOrders;
+        return eachItems;
     }
 
     private static String[] applyTrim(String[] split) {

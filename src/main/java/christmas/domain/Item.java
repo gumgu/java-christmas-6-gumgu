@@ -2,20 +2,21 @@ package christmas.domain;
 
 import christmas.ui.utilObject.Number;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Order {
+public class Item {
 
     private static final String ORDER_ERROR_MESSAGE = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.";
     private static final Integer MINIMUM_ORDER_QUANTITY = 1;
     private static final Integer MAXIMUM_TOTAL_ORDER_QUANTITY = 20;
 
-    private final Map<Dish, Integer> order;
+    private final Map<Dish, Integer> item;
 
-    public Order(List<String[]> items) {
-        order = new HashMap<>();
+    public Item(List<String[]> items) {
+        item = new HashMap<>();
 
         for (String[] parts : items) {
             Integer quantity = getQuantity(parts[1]);
@@ -24,22 +25,37 @@ public class Order {
             validateMinimumDishCount(quantity);
             validateDuplicateDish(dishByName);
 
-            order.put(dishByName, quantity);
+            item.put(dishByName, quantity);
         }
 
         validateMaximumTotalDishCount();
-        validateOnlyDrinkOrder();
+        validateOnlyDrinkItem();
 
     }
 
+    public Integer getDessertDishQuantity() {
+        return getDishQuantityByType(MenuType.DESSERT);
+    }
+
+    public Integer getMainDishQuantity() {
+        return getDishQuantityByType(MenuType.MAIN);
+    }
+
+    private Integer getDishQuantityByType(MenuType menuType) {
+        return item.entrySet().stream()
+                .filter(entry -> entry.getKey().getMenuType() == menuType)
+                .mapToInt(Map.Entry::getValue)
+                .sum();
+    }
+
     public Integer calculateOriginalPrice() {
-        return order.entrySet().stream()
+        return item.entrySet().stream()
                 .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
                 .sum();
     }
 
     private void validateDuplicateDish(Dish dishByName) {
-        if (order.containsKey(dishByName)) {
+        if (item.containsKey(dishByName)) {
             throw new IllegalArgumentException(ORDER_ERROR_MESSAGE);
         }
     }
@@ -51,7 +67,7 @@ public class Order {
     }
 
     private void validateMaximumTotalDishCount() {
-        boolean isExceedMaximumQuantity = order.values().stream()
+        boolean isExceedMaximumQuantity = item.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum() > MAXIMUM_TOTAL_ORDER_QUANTITY;
 
@@ -60,8 +76,8 @@ public class Order {
         }
     }
 
-    private void validateOnlyDrinkOrder() {
-        boolean isOnlyDrinkDish = order.keySet().stream()
+    private void validateOnlyDrinkItem() {
+        boolean isOnlyDrinkDish = item.keySet().stream()
                 .map(Dish::getMenuType)
                 .allMatch(menuType -> menuType.equals(MenuType.DRINK));
 
@@ -70,7 +86,6 @@ public class Order {
         }
     }
 
-
     //todo: 이거 InputView로 분리할 생각 해보기
     private Integer getQuantity(String parts) {
         Number number = new Number(parts);
@@ -78,4 +93,7 @@ public class Order {
         return quantity;
     }
 
+    public Map<Dish, Integer> getItem() {
+        return Collections.unmodifiableMap(item);
+    }
 }
