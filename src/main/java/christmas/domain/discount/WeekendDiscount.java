@@ -2,26 +2,34 @@ package christmas.domain.discount;
 
 import christmas.domain.VisitDate;
 
-public class WeekendDiscount implements Discount {
+public class WeekendDiscount extends Discount {
 
     private static final Integer FRIDAY_WEEKEND = 5;
     private static final Integer SATURDAY_WEEKEND = 6;
     private static final Integer DISCOUNT_PRICE = 2023;
+    Integer mainQuantity;
 
-    @Override
-    public boolean isApply(VisitDate visitDate) {
-        return isSaturday(visitDate) || isFriday(visitDate);
+    public WeekendDiscount(VisitDate visitDate, Integer mainQuantity) {
+        super(visitDate);
+        this.mainQuantity = mainQuantity;
     }
 
-    private boolean isFriday(VisitDate visitDate) {
+    @Override
+    protected boolean howToDetermineApplicable(VisitDate visitDate) {
+        return isSaturday() || isFriday();
+    }
+    private boolean isFriday() {
         return visitDate.getWeekday() == FRIDAY_WEEKEND;
     }
 
-    private boolean isSaturday(VisitDate visitDate) {
+    private boolean isSaturday() {
         return visitDate.getWeekday() == SATURDAY_WEEKEND;
     }
 
-    public Integer calculateDiscountPrice(Integer quantity) {
-        return quantity * DISCOUNT_PRICE;
+    @Override
+    protected Integer howToCalculateBenefit() {
+        return mainQuantity * DISCOUNT_PRICE;
+
     }
+
 }

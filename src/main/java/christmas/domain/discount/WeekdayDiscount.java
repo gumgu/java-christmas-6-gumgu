@@ -2,14 +2,20 @@ package christmas.domain.discount;
 
 import christmas.domain.VisitDate;
 
-public class WeekdayDiscount implements Discount {
+public class WeekdayDiscount extends Discount {
 
     private static final Integer SUNDAY_WEEKDAY = 7;
     private static final Integer THURSDAY_WEEKDAY = 4;
     private static final Integer DISCOUNT_PRICE = 2023;
+    Integer dessertDishQuantity;
+
+    public WeekdayDiscount(VisitDate visitDate, Integer dessertDishQuantity) {
+        super(visitDate);
+        this.dessertDishQuantity = dessertDishQuantity;
+    }
 
     @Override
-    public boolean isApply(VisitDate visitDate) {
+    protected boolean howToDetermineApplicable(VisitDate visitDate) {
         return isSunday(visitDate)
                 || isBeforeThursday(visitDate);
     }
@@ -21,10 +27,10 @@ public class WeekdayDiscount implements Discount {
         return visitDate.getWeekday() <= THURSDAY_WEEKDAY;
     }
 
-    //todo: 금액=Dish, 주문=Order, 날짜=Discount. 여러 도메인에 걸쳐있는 기능
-    //어디서 다루는것이 가장 적절할까?
-    public Integer calculateDiscountPrice(Integer quantity) {
-        return quantity * DISCOUNT_PRICE;
+    @Override
+    protected Integer howToCalculateBenefit() {
+        return dessertDishQuantity * DISCOUNT_PRICE;
     }
+
 
 }

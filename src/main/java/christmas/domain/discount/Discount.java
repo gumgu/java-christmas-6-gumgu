@@ -1,9 +1,28 @@
 package christmas.domain.discount;
 
 import christmas.domain.VisitDate;
+import christmas.domain.event.Event;
 
-public interface Discount {
+public abstract class Discount implements Event {
 
-    boolean isApply(VisitDate visitDate);
+    VisitDate visitDate;
+
+    public Discount(VisitDate visitDate) {
+        this.visitDate = visitDate;
+    }
+
+    @Override
+    public boolean isApply() {
+        return howToDetermineApplicable(visitDate);
+    }
+
+    protected abstract boolean howToDetermineApplicable(VisitDate visitDate);
+
+    @Override
+    public Integer calculateBenefitPrice() {
+        return howToCalculateBenefit();
+    }
+
+    protected abstract Integer howToCalculateBenefit();
 
 }
