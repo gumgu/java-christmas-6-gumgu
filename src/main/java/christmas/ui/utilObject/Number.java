@@ -4,9 +4,12 @@ public class Number {
 
     private static final Integer MAX_NUMBER_DIGITS = 9;
 
+    private String errorMessage;
     private final Integer numericValue;
 
-    public Number(String inputValue) {
+    public Number(String inputValue, String errorMessage) {
+        this.errorMessage = errorMessage;
+
         validateEmpty(inputValue);
         validateDigit(inputValue);
         validateLength(inputValue);
@@ -21,19 +24,19 @@ public class Number {
 
     public void validateEmpty(String inputValue) {
         if (isBlank(inputValue)) {
-            throw new IllegalArgumentException("[ERROR] 공백을 입력할 수 없습니다.");
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 
     private void validateDigit(String inputValue) {
         if (!isNumber(inputValue)) {
-            throw new IllegalArgumentException("[ERROR] 숫자만 입력 가능합니다.");
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 
     private void validateLength(String inputValue) {
         if (!isNumberWithinNineDigits(inputValue)) {
-            throw new IllegalArgumentException("[ERROR] 9자리 숫자까지 입력 가능합니다.");
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 
