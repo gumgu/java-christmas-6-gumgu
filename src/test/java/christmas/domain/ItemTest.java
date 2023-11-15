@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.*;
 
 class ItemTest {
 
-
     @Test
     @DisplayName("중복되는 요리가 입력되는 경우, 예외가 발생한다.")
     void validateDuplicateDish() {

@@ -2,7 +2,6 @@ package christmas.domain.order;
 
 import christmas.ui.utilObject.Number;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 public class VisitDate {
@@ -19,8 +18,8 @@ public class VisitDate {
         visitDay = number;
     }
 
+   // 월 1 ~ 일 7
     public Integer getWeekday() {
-        // 월 1 ~ 일 7
         return LocalDate.of(2023, 12, visitDay)
                 .getDayOfWeek()
                 .getValue();
