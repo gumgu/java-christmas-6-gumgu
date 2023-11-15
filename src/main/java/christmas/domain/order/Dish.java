@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.order;
 
 import java.util.Arrays;
 
@@ -6,7 +6,7 @@ public enum Dish {
 
     // 애피타이저
     MUSHROOM_SOUP("양송이수프", MenuType.APPETIZER, 6000),
-    TAPAS("타파스", MenuType.APPETIZER,5500),
+    TAPAS("타파스", MenuType.APPETIZER, 5500),
     CAESAR_SALAD("시저샐러드", MenuType.APPETIZER, 8000),
 
     // 메인
@@ -21,8 +21,8 @@ public enum Dish {
 
     // 음료
     ZERO_COKE("제로콜라", MenuType.DRINK, 3000),
-    RED_WINE("레드와인", MenuType.DRINK,60000),
-    CHAMPAGNE("샴페인", MenuType.DRINK,25000);
+    RED_WINE("레드와인", MenuType.DRINK, 60000),
+    CHAMPAGNE("샴페인", MenuType.DRINK, 25000);
 
     private final String name;
     private final MenuType menuType;
@@ -46,7 +46,13 @@ public enum Dish {
         return price;
     }
 
-    //todo: Order쪽으로 빼는것도 고려해보기
+    public static Dish findDishByName(String dishName) {
+        return Arrays.stream(values())
+                .filter(dish -> dish.getName().equals(dishName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."));
+    }
+
     public static void validateDishName(String inputDish) {
         if (!isAnyMatchWithDish(inputDish)) {
             throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
