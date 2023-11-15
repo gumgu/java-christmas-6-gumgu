@@ -13,7 +13,7 @@ public class SpecialDiscount extends Discount {
     }
 
     @Override
-    protected boolean howToDetermineApplicable(VisitDate visitDate) {
+    protected boolean checkApplicability(VisitDate visitDate) {
         return isSunday(visitDate) || isChristmas(visitDate);
     }
 
@@ -26,7 +26,7 @@ public class SpecialDiscount extends Discount {
     }
 
     @Override
-    protected Integer howToCalculateBenefit() {
+    protected Integer calculateDiscount() {
         return SPECIAL_DISCOUNT_PRICE;
     }
 

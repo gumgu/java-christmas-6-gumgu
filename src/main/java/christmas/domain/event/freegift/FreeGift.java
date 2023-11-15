@@ -12,15 +12,15 @@ public abstract class FreeGift implements Event {
 
     @Override
     public boolean isApply() {
-        return howToDetermineApplicable(originalPrice);
+        return checkApplicability(originalPrice);
     }
 
-    protected abstract boolean howToDetermineApplicable(Integer originalPrice);
+    protected abstract boolean checkApplicability(Integer originalPrice);
 
     @Override
     public Integer calculateBenefitPrice() {
-        return howToCalculateBenefit();
+        return calculateFreeGiftPrice();
     }
 
-    protected abstract Integer howToCalculateBenefit();
+    protected abstract Integer calculateFreeGiftPrice();
 }

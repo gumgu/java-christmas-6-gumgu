@@ -13,7 +13,7 @@ public class DdayDiscount extends Discount{
     }
 
     @Override
-    protected boolean howToDetermineApplicable(VisitDate visitDate) {
+    protected boolean checkApplicability(VisitDate visitDate) {
         return visitDate.isBeforeIncluding(DISCOUNT_APPLICATION_DEADLINE);
     }
 
@@ -28,7 +28,7 @@ public class DdayDiscount extends Discount{
     }
 
     @Override
-    protected Integer howToCalculateBenefit() {
+    protected Integer calculateDiscount() {
         return DEFAULT_DISCOUNT_PRICE + (PER_DAY_DISCOUNT_PRICE * (visitDate.getVisitDay() - 1));
     }
 }

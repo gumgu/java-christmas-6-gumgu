@@ -13,16 +13,16 @@ public abstract class Discount implements Event {
 
     @Override
     public boolean isApply() {
-        return howToDetermineApplicable(visitDate);
+        return checkApplicability(visitDate);
     }
 
-    protected abstract boolean howToDetermineApplicable(VisitDate visitDate);
+    protected abstract boolean checkApplicability(VisitDate visitDate);
 
     @Override
     public Integer calculateBenefitPrice() {
-        return howToCalculateBenefit();
+        return calculateDiscount();
     }
 
-    protected abstract Integer howToCalculateBenefit();
+    protected abstract Integer calculateDiscount();
 
 }

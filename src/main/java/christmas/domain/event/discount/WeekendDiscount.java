@@ -15,7 +15,7 @@ public class WeekendDiscount extends Discount {
     }
 
     @Override
-    protected boolean howToDetermineApplicable(VisitDate visitDate) {
+    protected boolean checkApplicability(VisitDate visitDate) {
         return isSaturday() || isFriday();
     }
     private boolean isFriday() {
@@ -27,7 +27,7 @@ public class WeekendDiscount extends Discount {
     }
 
     @Override
-    protected Integer howToCalculateBenefit() {
+    protected Integer calculateDiscount() {
         return mainQuantity * DISCOUNT_PRICE;
 
     }

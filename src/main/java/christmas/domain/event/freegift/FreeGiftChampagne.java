@@ -11,12 +11,12 @@ public class FreeGiftChampagne extends FreeGift {
     }
 
     @Override
-    protected boolean howToDetermineApplicable(Integer originalPrice) {
+    protected boolean checkApplicability(Integer originalPrice) {
         return originalPrice >= MINIMUM_PRICE_FOR_GIFT;
     }
 
     @Override
-    protected Integer howToCalculateBenefit() {
+    protected Integer calculateFreeGiftPrice() {
         return Dish.CHAMPAGNE.getPrice();
     }
 }
