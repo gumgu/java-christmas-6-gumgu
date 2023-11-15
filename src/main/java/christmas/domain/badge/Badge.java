@@ -39,4 +39,9 @@ public enum Badge {
     public Integer getMinimumAmount() {
         return minimumAmount;
     }
+
+    public String getName() {
+        return name;
+    }
+
 }

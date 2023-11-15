@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.order;
 
 import christmas.ui.utilObject.Number;
 
@@ -54,14 +54,14 @@ public class Item {
                 .sum();
     }
 
-    private void validateDuplicateDish(Dish dishByName) {
-        if (item.containsKey(dishByName)) {
+    private void validateMinimumDishCount(Integer quantity) {
+        if (quantity < MINIMUM_ORDER_QUANTITY || quantity > MAXIMUM_TOTAL_ORDER_QUANTITY) {
             throw new IllegalArgumentException(ORDER_ERROR_MESSAGE);
         }
     }
 
-    private void validateMinimumDishCount(Integer quantity) {
-        if (quantity < MINIMUM_ORDER_QUANTITY || quantity > MAXIMUM_TOTAL_ORDER_QUANTITY) {
+    private void validateDuplicateDish(Dish dishByName) {
+        if (item.containsKey(dishByName)) {
             throw new IllegalArgumentException(ORDER_ERROR_MESSAGE);
         }
     }
@@ -86,9 +86,8 @@ public class Item {
         }
     }
 
-    //todo: 이거 InputView로 분리할 생각 해보기
     private Integer getQuantity(String parts) {
-        Number number = new Number(parts);
+        Number number = new Number(parts, ORDER_ERROR_MESSAGE);
         Integer quantity = number.getNumericValue();
         return quantity;
     }
