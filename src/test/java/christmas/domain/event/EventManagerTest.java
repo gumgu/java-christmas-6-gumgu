@@ -1,12 +1,12 @@
 package christmas.domain.event;
 
-import christmas.domain.Item;
-import christmas.domain.VisitDate;
-import christmas.domain.discount.DdayDiscount;
-import christmas.domain.discount.WeekdayDiscount;
-import christmas.domain.discount.WeekendDiscount;
-import christmas.domain.freegift.FreeGiftChampagne;
-import christmas.domain.order.Order;
+import christmas.domain.order.Item;
+import christmas.domain.order.VisitDate;
+import christmas.domain.event.discount.DdayDiscount;
+import christmas.domain.event.discount.WeekdayDiscount;
+import christmas.domain.event.discount.WeekendDiscount;
+import christmas.domain.event.freegift.FreeGiftChampagne;
+import christmas.domain.order.OrderDTO;
 import christmas.ui.parser.ParseItem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ class EventManagerTest {
     @Test
     void eventManager_day4_underOriginalPrice() {
         // given
-        Order order = new Order(
+        OrderDTO order = new OrderDTO(
                 new VisitDate("4"),
                 new Item(ParseItem.parseItem("타파스-2,시저샐러드-3"))
         );
@@ -45,7 +45,7 @@ class EventManagerTest {
     @Test
     void eventManager_day15_equalOriginalPrice() {
         // given
-        Order order = new Order(
+        OrderDTO order = new OrderDTO(
                 new VisitDate("15"),
                 new Item(ParseItem.parseItem("티본스테이크-2,아이스크림-2"))
         );
@@ -70,7 +70,7 @@ class EventManagerTest {
     @Test
     void eventManager_day26_upperOriginalPrice() {
         // given
-        Order order = new Order(
+        OrderDTO order = new OrderDTO(
                 new VisitDate("27"),
                 new Item(ParseItem.parseItem("바비큐립-3,아이스크림-2,초코케이크-1"))
         );

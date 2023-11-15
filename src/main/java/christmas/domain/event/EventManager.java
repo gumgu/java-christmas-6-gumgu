@@ -1,11 +1,10 @@
 package christmas.domain.event;
 
-import christmas.domain.badge.Badge;
-import christmas.domain.discount.Discount;
-import christmas.domain.discount.DiscountManager;
-import christmas.domain.freegift.FreeGift;
-import christmas.domain.freegift.FreeGiftManager;
-import christmas.domain.order.Order;
+import christmas.domain.event.discount.Discount;
+import christmas.domain.event.discount.DiscountManager;
+import christmas.domain.event.freegift.FreeGift;
+import christmas.domain.event.freegift.FreeGiftManager;
+import christmas.domain.order.OrderDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +16,9 @@ public class EventManager {
 
     private final List<Event> applicableEvents = new ArrayList<>();
 
-    Order order;
+    OrderDTO order;
 
-    public EventManager(Order order) {
+    public EventManager(OrderDTO order) {
         this.order = order;
     }
 
@@ -40,10 +39,6 @@ public class EventManager {
         }
 
         return totalBenefitPrice;
-    }
-
-    public Badge getBadgeByBenefit() {
-        return Badge.getBadgeByBenefitPrice(getTotalBenefitPrice());
     }
 
     private boolean isEventApplicable() {
