@@ -53,15 +53,4 @@ public enum Dish {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."));
     }
 
-    public static void validateDishName(String inputDish) {
-        if (!isAnyMatchWithDish(inputDish)) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
-        }
-    }
-
-    private static boolean isAnyMatchWithDish(String inputDish) {
-        return Arrays.stream(values())
-                .map(Dish::getName)
-                .anyMatch(name -> name.equals(inputDish));
-    }
 }

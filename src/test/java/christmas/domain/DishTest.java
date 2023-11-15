@@ -13,7 +13,7 @@ class DishTest {
     @DisplayName("목록에 없는 요리의 이름을 검증하는 경우, 예외를 발생시킨다.")
     void validateDishName(String inputDish) {
         //when &  then
-        Assertions.assertThatThrownBy(() -> Dish.validateDishName(inputDish))
+        Assertions.assertThatThrownBy(() -> Dish.findDishByName(inputDish))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
