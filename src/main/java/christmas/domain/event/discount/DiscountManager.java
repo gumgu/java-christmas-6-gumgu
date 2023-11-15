@@ -1,11 +1,10 @@
-package christmas.domain.discount;
+package christmas.domain.event.discount;
 
-import christmas.domain.VisitDate;
+import christmas.domain.order.VisitDate;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class DiscountManager {
 
@@ -51,19 +50,6 @@ public class DiscountManager {
         }
 
         return totalDiscountPrice;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Discount discount = (Discount) o;
-        return Objects.equals(visitDate, discount.visitDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(visitDate);
     }
 
 }

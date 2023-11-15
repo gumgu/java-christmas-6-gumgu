@@ -1,6 +1,7 @@
 package christmas.domain.freegift;
 
-import christmas.domain.Dish;
+import christmas.domain.event.freegift.FreeGiftChampagne;
+import christmas.domain.order.Dish;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

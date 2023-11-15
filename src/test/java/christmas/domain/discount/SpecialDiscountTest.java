@@ -1,6 +1,7 @@
 package christmas.domain.discount;
 
-import christmas.domain.VisitDate;
+import christmas.domain.event.discount.SpecialDiscount;
+import christmas.domain.order.VisitDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

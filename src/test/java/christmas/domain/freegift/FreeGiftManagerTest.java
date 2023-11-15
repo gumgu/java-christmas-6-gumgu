@@ -1,5 +1,8 @@
 package christmas.domain.freegift;
 
+import christmas.domain.event.freegift.FreeGift;
+import christmas.domain.event.freegift.FreeGiftChampagne;
+import christmas.domain.event.freegift.FreeGiftManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

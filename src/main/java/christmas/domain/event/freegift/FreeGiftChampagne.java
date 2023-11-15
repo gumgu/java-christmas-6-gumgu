@@ -1,6 +1,6 @@
-package christmas.domain.freegift;
+package christmas.domain.event.freegift;
 
-import christmas.domain.Dish;
+import christmas.domain.order.Dish;
 
 public class FreeGiftChampagne extends FreeGift {
 

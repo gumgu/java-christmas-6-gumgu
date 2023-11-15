@@ -1,4 +1,4 @@
-package christmas.domain.freegift;
+package christmas.domain.event.freegift;
 
 import java.util.ArrayList;
 import java.util.Collections;

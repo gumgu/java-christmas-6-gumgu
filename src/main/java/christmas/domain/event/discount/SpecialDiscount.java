@@ -1,6 +1,6 @@
-package christmas.domain.discount;
+package christmas.domain.event.discount;
 
-import christmas.domain.VisitDate;
+import christmas.domain.order.VisitDate;
 
 public class SpecialDiscount extends Discount {
 
